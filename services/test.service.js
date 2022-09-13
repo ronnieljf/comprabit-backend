@@ -1,5 +1,7 @@
+const HelloWorld = require("../models/hello-world.model");
 const test = async () => {
-  return { hello: "world" };
+  const hello = new HelloWorld("World");
+  return hello;
 };
 
 module.exports = {
