@@ -6,7 +6,7 @@ const start = async () => {
   const bodyParser = require("body-parser");
   const app = express();
   const port = process.env.APP_PORT;
-
+  require("./database/mongo").connect();
   app.use(cors());
   app.use(
     bodyParser.urlencoded({
