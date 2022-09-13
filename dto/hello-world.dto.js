@@ -1,8 +1,8 @@
-class HelloWorld {
+class HelloWorldDTO {
   hello;
   constructor(hello) {
     this.hello = hello;
   }
 }
 
-module.exports = HelloWorld;
+module.exports = HelloWorldDTO;
