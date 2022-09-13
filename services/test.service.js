@@ -1,4 +1,4 @@
-const HelloWorld = require("../models/hello-world.model");
+const HelloWorld = require("../dto/hello-world.dto");
 const test = async () => {
   const hello = new HelloWorld("World");
   return hello;
