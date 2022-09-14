@@ -1,0 +1,173 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "CompraBit Swagger Documentation",
+    "version": "1.0.0",
+    "title": "CompraBit Swagger Documentation",
+    "contact": {
+      "email": "ronnieljf@gmail.cl"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "paths": {
+    "/get-import/{instance_id}/{load_id}": {
+      "get": {
+        "tags": ["Import"],
+        "summary": "Get import status by intance_id and load_id",
+        "description": "Get a import status",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "instance_id",
+            "in": "path",
+            "description": "Instance Id",
+            "type": "integer"
+          },
+          {
+            "name": "load_id",
+            "in": "path",
+            "description": "Load Id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/save-import": {
+      "post": {
+        "tags": ["Import"],
+        "summary": "Save a import from SII",
+        "description": "Save the import",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "import object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/StatusImport"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/save-import-file": {
+      "post": {
+        "tags": ["Import"],
+        "summary": "Save a import from FILE",
+        "description": "Save the import",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "import object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/StatusImportFile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "StatusImport": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "integer"
+        },
+        "load_id": {
+          "type": "string"
+        },
+        "rut_legal": {
+          "type": "string"
+        },
+        "pass_rut_legal": {
+          "type": "string"
+        },
+        "rut_company": {
+          "type": "string"
+        }
+      }
+    },
+    "StatusImportFile": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "integer"
+        },
+        "load_id": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "file_type": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "Result": {
+          "type": "integer",
+          "example": "1",
+          "description": "1 is operation successfull and 0 is error"
+        },
+        "Description": {
+          "type": "string",
+          "example": "OK",
+          "description": "more info"
+        },
+        "Object": {
+          "type": "object",
+          "example": null,
+          "description": "any object"
+        }
+      }
+    }
+  }
+}
