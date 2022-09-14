@@ -1,15 +1,15 @@
 const StatusCodes = require("../constants/status.codes");
 const userService = require("../services/user.service");
+const ErrorDTO = require("../dto/error.dto");
 
 const registerUser = async (req, res) => {
   const user = await userService.registerUser(req.body);
   if (!user) {
-    return res
-      .status(StatusCodes.NOT_ACCEPTABLE)
-      .json({
-        error: "Entity Duplicated",
-        message: "Email or Username already Exist",
-      });
+    const error = new ErrorDTO(
+      "Entity Duplicated",
+      "Email or Username already exist"
+    );
+    return res.status(StatusCodes.NOT_ACCEPTABLE).json(error);
   }
   return res.status(StatusCodes.OK).json(user);
 };
