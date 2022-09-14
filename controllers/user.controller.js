@@ -22,7 +22,7 @@ const userByEmail = async (req, res) => {
 const login = async (req, res) => {
   const user = await userService.login(req.body.email, req.body.password);
   if (user.error) {
-    return res.status(StatusCodes.NOT_FOUND).json(user);
+    return res.status(StatusCodes.UNAUTHORIZED).json(user);
   }
   return res.status(StatusCodes.OK).json(user);
 };
