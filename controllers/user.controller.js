@@ -17,7 +17,16 @@ const userByEmail = async (req, res) => {
   return res.status(StatusCodes.OK).json(user);
 };
 
+const login = async (req, res) => {
+  const user = await userService.login(req.body.email, req.body.password);
+  if (user.error) {
+    return res.status(StatusCodes.NOT_FOUND).json(user);
+  }
+  return res.status(StatusCodes.OK).json(user);
+};
+
 module.exports = {
   registerUser,
   userByEmail,
+  login,
 };

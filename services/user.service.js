@@ -17,7 +17,19 @@ const userByEmail = async (email) => {
   return user;
 };
 
+const login = async (email, password) => {
+  const user = await UserModel.findOne({ email });
+  if (!user) {
+    return { error: "Invalid Email", message: "Email not exist" };
+  }
+  if (user.password != password) {
+    return { error: "Invalid Password", message: "Password Incorrect" };
+  }
+  return user;
+};
+
 module.exports = {
   registerUser,
-  userByEmail
+  userByEmail,
+  login,
 };
