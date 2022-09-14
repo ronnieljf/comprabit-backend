@@ -1,4 +1,5 @@
 const UserDTO = require("../dto/user.dto");
+const ErrorDTO = require("../dto/error.dto");
 const UserModel = require("../models/user.model");
 const registerUser = async (data) => {
   const user = new UserDTO(data);
@@ -20,10 +21,10 @@ const userByEmail = async (email) => {
 const login = async (email, password) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
-    return { error: "Invalid Email", message: "Email not exist" };
+    return new ErrorDTO("Invalid Email", "Email not exist");
   }
   if (user.password != password) {
-    return { error: "Invalid Password", message: "Password Incorrect" };
+    return new ErrorDTO("Invalid Password", "Password Incorrect");
   }
   return user;
 };
