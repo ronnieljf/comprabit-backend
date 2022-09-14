@@ -15,6 +15,10 @@ const userByEmail = async (req, res) => {
   return res.status(StatusCodes.OK).json(user);
 };
 
+const user = async (req, res) => {
+  return res.status(StatusCodes.OK).json(req.user);
+};
+
 const login = async (req, res) => {
   const user = await userService.login(req.body.email, req.body.password);
   if (user.error) {
@@ -27,4 +31,5 @@ module.exports = {
   registerUser,
   userByEmail,
   login,
+  user,
 };

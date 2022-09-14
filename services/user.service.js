@@ -33,9 +33,13 @@ const login = async (email, password) => {
   if (!bcrypt.compareSync(password, user.password)) {
     return new ErrorDTO("Invalid Password", "Password Incorrect");
   }
-  let token = jwt.sign({ user }, process.env.SEED_AUTHENTICATION, {
-    expiresIn: process.env.EXPIRED_token,
-  });
+  let token = jwt.sign(
+    { userId: user._id, email: user.email, username: user.username },
+    process.env.SEED_AUTHENTICATION,
+    {
+      expiresIn: process.env.EXPIRED_token,
+    }
+  );
   return { token };
 };
 

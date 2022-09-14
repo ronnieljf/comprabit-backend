@@ -81,7 +81,10 @@ let UserSchema = new Schema({
 UserSchema.methods.toJSON = function () {
   let user = this;
   let userObject = user.toObject();
+  userObject.id = userObject._id;
   delete userObject.password;
+  delete userObject._id;
+  delete userObject.__v;
   return userObject;
 };
 
