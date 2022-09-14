@@ -6,6 +6,12 @@ const test = async (req, res) => {
   return res.status(StatusCodes.OK).json(hello);
 };
 
+const myName = async (req, res) => {
+  const name = await testService.myName();
+  return res.status(StatusCodes.OK).json(name);
+};
+
 module.exports = {
   test,
+  myName,
 };

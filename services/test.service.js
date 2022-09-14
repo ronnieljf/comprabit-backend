@@ -4,6 +4,12 @@ const test = async () => {
   return hello;
 };
 
+const myName = async () => {
+  const name = new HelloWorldDTO("Nailet");
+  return name;
+};
+
 module.exports = {
   test,
+  myName,
 };
