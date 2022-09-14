@@ -8,12 +8,7 @@ const start = async () => {
   const port = process.env.APP_PORT;
   require("./database/mongo").connect();
   app.use(cors());
-  app.use(
-    bodyParser.urlencoded({
-      limit: "100mb",
-      extended: true,
-    })
-  );
+  app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
   app.use(bodyParser.json({ limit: "100mb" }));
   app.use("/api/v1", require("./routes/router"));
 
