@@ -6,20 +6,27 @@ const isAuthenticated = async (req, res, next) => {
     const { authorization } = req.headers;
     if (!authorization) {
       return next(
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({
-            error: "Invalid Token Authorization",
-            message: "Please login to access the data",
-          })
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: "Invalid Token Authorization",
+          message: "Please login to access the data",
+        })
       );
     }
     const verify = await jwt.verify(
       authorization,
       process.env.SEED_AUTHENTICATION
     );
-    req.user = await UserModel.findById(verify.userId);
-    next();
+    if (verify) {
+      req.user = await UserModel.findById(verify.userId);
+      next();
+    } else {
+      return next(
+        res.status(StatusCodes.UNAUTHORIZED).json({
+          error: "Invalid Token Authorization",
+          message: "Token Invalid",
+        })
+      );
+    }
   } catch (error) {
     return next(
       res
