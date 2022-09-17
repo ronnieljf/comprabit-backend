@@ -1,7 +1,7 @@
 const { check } = require("express-validator");
 const { Router } = require("express");
 const router = Router();
-const isAuthenticated = require("../middlewares/auth-middleware.service");
+const isAuthenticated = require("../middlewares/auth.middleware");
 
 const { test, myName } = require("../controllers/test.controller");
 const {
