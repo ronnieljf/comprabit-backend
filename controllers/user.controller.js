@@ -16,7 +16,8 @@ const userByEmail = async (req, res) => {
 };
 
 const user = async (req, res) => {
-  return res.status(StatusCodes.OK).json(req.user);
+  const user = await userService.userById(req.user._id);
+  return res.status(StatusCodes.OK).json(user);
 };
 
 const login = async (req, res) => {

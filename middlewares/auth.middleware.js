@@ -1,4 +1,3 @@
-const UserModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const StatusCodes = require("../constants/status.codes");
 const isAuthenticated = async (req, res, next) => {
@@ -12,12 +11,9 @@ const isAuthenticated = async (req, res, next) => {
         })
       );
     }
-    const verify = await jwt.verify(
-      authorization,
-      process.env.SEED_AUTHENTICATION
-    );
+    const verify = jwt.verify(authorization, process.env.SEED_AUTHENTICATION);
     if (verify) {
-      req.user = await UserModel.findById(verify.userId);
+      req.user = verify;
       next();
     } else {
       return next(

@@ -9,8 +9,8 @@ let UserSchema = new Schema({
   },
   username: {
     type: String,
-    require: true,
-    unique: true,
+    require: false,
+    default: null,
   },
   password: {
     type: String,
@@ -48,6 +48,11 @@ let UserSchema = new Schema({
   },
   email_confirmation_token: {
     type: String,
+    require: false,
+    default: null,
+  },
+  email_confirmation_token_expired: {
+    type: Date,
     require: false,
     default: null,
   },

@@ -15,26 +15,93 @@
   "schemes": ["http"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "host": "localhost:3000",
+  "host": "localhost:3300",
   "basePath": "/api/v1",
   "paths": {
-    "/get-import/{instance_id}/{load_id}": {
-      "get": {
-        "tags": ["Import"],
-        "summary": "Get import status by intance_id and load_id",
-        "description": "Get a import status",
+    "/user/register-user": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a user with username, email and password",
+        "description": "Register a user",
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "instance_id",
-            "in": "path",
-            "description": "Instance Id",
-            "type": "integer"
+            "in": "body",
+            "name": "body",
+            "description": "Register a user",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UserRegister"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UserRegisterResponse"
+            }
           },
+          "401": {
+            "description": "UNAUTHORIZED",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Generate token by email and password",
+        "description": "Login token",
+        "produces": ["application/json"],
+        "parameters": [
           {
-            "name": "load_id",
-            "in": "path",
-            "description": "Load Id",
+            "in": "body",
+            "name": "body",
+            "description": "Generate token login",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "401": {
+            "description": "UNAUTHORIZED",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get user data by token",
+        "description": "Get user data",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "authorization",
+            "required": true,
             "type": "string"
           }
         ],
@@ -43,65 +110,21 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/Response"
+              "$ref": "#/definitions/LoginResponse"
             }
-          }
-        }
-      }
-    },
-    "/save-import": {
-      "post": {
-        "tags": ["Import"],
-        "summary": "Save a import from SII",
-        "description": "Save the import",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "import object",
-            "required": true,
+          },
+          "400": {
+            "description": "BAD_REQUEST",
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/StatusImport"
+              "$ref": "#/definitions/Error"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
+          },
+          "401": {
+            "description": "UNAUTHORIZED",
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/Response"
-            }
-          }
-        }
-      }
-    },
-    "/save-import-file": {
-      "post": {
-        "tags": ["Import"],
-        "summary": "Save a import from FILE",
-        "description": "Save the import",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "import object",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "$ref": "#/definitions/StatusImportFile"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "$ref": "#/definitions/Response"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -109,63 +132,115 @@
     }
   },
   "definitions": {
-    "StatusImport": {
+    "UserRegister": {
       "type": "object",
       "properties": {
-        "instance_id": {
-          "type": "integer"
-        },
-        "load_id": {
-          "type": "string"
-        },
-        "rut_legal": {
-          "type": "string"
-        },
-        "pass_rut_legal": {
-          "type": "string"
-        },
-        "rut_company": {
-          "type": "string"
-        }
-      }
-    },
-    "StatusImportFile": {
-      "type": "object",
-      "properties": {
-        "instance_id": {
-          "type": "integer"
-        },
-        "load_id": {
-          "type": "string"
-        },
-        "file": {
-          "type": "string"
-        },
-        "file_type": {
-          "type": "string"
-        },
-        "filename": {
-          "type": "string"
-        }
-      }
-    },
-    "Response": {
-      "type": "object",
-      "properties": {
-        "Result": {
-          "type": "integer",
-          "example": "1",
-          "description": "1 is operation successfull and 0 is error"
-        },
-        "Description": {
+        "email": {
           "type": "string",
-          "example": "OK",
-          "description": "more info"
+          "example": "example@gmail.com"
         },
-        "Object": {
-          "type": "object",
-          "example": null,
-          "description": "any object"
+        "password": {
+          "type": "string",
+          "example": "1234567"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "example@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "1234567"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZlY2NiNmFlOTZhNjcwZDY4YzY1MjciLCJlbWFpbCI6Im5haTVAZ21haWwuY29tIiwidXNlcm5hbWUiOiJuYWk1IiwiaWF0IjoxNjc4NTgyMjEyLCJleHAiOjE2Nzg3NTUwMTJ9.fUmw3cTRLQrSK1eYnpUyVDji9cX3KcTiKEM2NYcC-ho"
+        }
+      }
+    },
+    "UserData": {
+      "type": "object",
+      "properties": {
+        "email_confirmation_token_expired": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "example": []
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "email_confirmation": {
+          "type": "boolean"
+        },
+        "email_confirmation_token": {
+          "type": "string"
+        },
+        "email_confirmation_at": {
+          "type": "date"
+        },
+        "dob": {
+          "type": "date"
+        },
+        "wallets": {
+          "type": "array",
+          "example": []
+        },
+        "created_at": {
+          "type": "date"
+        },
+        "updated_at": {
+          "type": "date"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "UserRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "example@gmail.com"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Invalid Username"
+        },
+        "message": {
+          "type": "string",
+          "example": "Username already exist"
         }
       }
     }

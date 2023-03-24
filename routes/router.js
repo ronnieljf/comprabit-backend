@@ -3,7 +3,6 @@ const { Router } = require("express");
 const router = Router();
 const isAuthenticated = require("../middlewares/auth.middleware");
 
-const { test, myName } = require("../controllers/test.controller");
 const {
   registerUser,
   userByEmail,
@@ -11,8 +10,7 @@ const {
   user,
 } = require("../controllers/user.controller");
 
-router.get("/test", test);
-router.get("/my-name", myName);
+const { getPrice } = require("../controllers/prices.controller");
 
 //User
 router.post("/user/register-user", registerUser);
@@ -20,3 +18,5 @@ router.post("/user/user-by-email", isAuthenticated, userByEmail);
 router.post("/user/login", login);
 router.get("/user", isAuthenticated, user);
 module.exports = router;
+
+//currencies
